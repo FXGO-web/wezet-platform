@@ -1,4 +1,12 @@
-export type Database = {
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
+
+export interface Database {
   public: {
     Tables: {
       products: {
@@ -20,12 +28,10 @@ export type Database = {
           description?: string | null;
           price?: number | null;
         };
-        Relationships: [];
       };
     };
     Views: {};
     Functions: {};
     Enums: {};
-    CompositeTypes: {};
   };
-};
+}

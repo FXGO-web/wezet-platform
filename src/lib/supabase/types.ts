@@ -1,4 +1,4 @@
-export type Json =
+type Json =
   | string
   | number
   | boolean
@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       products: {
@@ -34,4 +34,4 @@ export interface Database {
     Functions: {};
     Enums: {};
   };
-}
+};

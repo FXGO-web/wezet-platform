@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/supabase/types";
 
-export type Product = Database["public"]["Tables"]["products"]["Row"];
+type Product = Database["public"]["Tables"]["products"]["Row"];
 
 export default async function DashboardPage() {
   const supabase = createServerSupabaseClient();
@@ -10,7 +10,9 @@ export default async function DashboardPage() {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (!session) redirect("/login");
+  if (!session) {
+    redirect("/login");
+  }
 
   const { data: products, error: productsError } = await supabase
     .from("products")
@@ -31,11 +33,14 @@ export default async function DashboardPage() {
       )}
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mt-6">
-        {safeProducts.map((product) => (
-          <div key={product.id} className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-            <h2 className="text-xl font-semibold text-slate-800">{product.name}</h2>
-            <p className="mt-2 text-slate-600">{product.description}</p>
-            <p className="mt-4 text-slate-900 font-bold">{product.price} €</p>
+        {safeProducts.map((p) => (
+          <div
+            key={p.id}
+            className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+          >
+            <h2 className="text-xl font-semibold text-slate-900">{p.name}</h2>
+            <p className="text-slate-600">{p.description}</p>
+            <p className="mt-2 font-medium text-slate-800">{p.price} €</p>
           </div>
         ))}
       </div>

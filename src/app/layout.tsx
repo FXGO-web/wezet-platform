@@ -1,16 +1,24 @@
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { GeistSans, GeistMono } from "geist/font";
+import { SupabaseProvider } from "@/components/supabase-provider";
 
-export const metadata = {
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
   title: "Wezet Platform",
   description: "Wellness Booking Platform",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>
-        {children}
+      <body className={inter.className}>
+        <SupabaseProvider>{children}</SupabaseProvider>
       </body>
     </html>
   );
